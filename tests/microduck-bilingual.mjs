@@ -1,0 +1,45 @@
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{
+  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.addInitScript(()=>{const tools=new Map();Object.defineProperty(document,'modelContext',{value:{registerTool(tool,options){tools.set(tool.name,tool);options?.signal.addEventListener('abort',()=>tools.delete(tool.name));}},configurable:true});window.testTools=tools;});
+  await page.goto((process.env.TEST_BASE_URL || 'http://localhost:3001')+'/?lang=zh');
+  await page.getByRole('link',{name:'Microduck Lab',exact:true}).click();
+  await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready);
+  const read=()=>page.evaluate(()=>window.testTools.get('read_microduck_state').execute({}));
+  assert.equal((await read()).locale,'zh');
+  await page.getByRole('tab',{name:'关节运动',exact:true}).click();
+  await page.getByRole('slider',{name:/左髋偏航/}).press('End');
+  await page.getByRole('button',{name:'侧面',exact:true}).click();
+  // Wait for orbit damping to settle before comparing the view across languages.
+  await page.waitForTimeout(500);
+  const before=await read();
+  await page.getByRole('button',{name:'Switch to English',exact:true}).click();
+  const after=await read();assert.equal(after.locale,'en');
+  for(const key of ['selected','mode','angleDegrees','jointBody','hidden','isolated','transforms'])assert.deepEqual(after[key],before[key],key);
+  for(const key of ['position','target'])after.camera[key].forEach((n,i)=>assert.ok(Math.abs(n-before.camera[key][i])<1e-10));
+  await page.getByRole('tab',{name:'Assembly',exact:true}).click();
+  await page.getByRole('slider',{name:/Exploded view/}).press('End');
+  const exploded=await read();await page.getByRole('button',{name:'切换到中文',exact:true}).click();
+  assert.equal((await read()).explodePercent,100);assert.deepEqual((await read()).transforms,exploded.transforms);
+  await page.getByRole('button',{name:'3. 追踪相连的部件',exact:true}).click();
+  await page.getByRole('button',{name:'查看解释',exact:true}).click();
+  await page.getByText('左脚位于左髋连接链的下游',{exact:false}).waitFor();
+  await page.screenshot({path:'/private/tmp/microduck-zh-desktop.png',fullPage:true});
+  await page.getByRole('button',{name:'Switch to English',exact:true}).click();
+  await page.reload();await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready);
+  assert.equal((await read()).locale,'en');
+  await page.getByRole('link',{name:'← Embodied AI course',exact:true}).click();
+  await page.waitForFunction(()=>document.documentElement.lang==='en');
+  assert.equal(await page.locator('html').getAttribute('lang'),'en');
+  await page.setViewportSize({width:390,height:844});
+  await page.getByRole('link',{name:'Microduck Lab',exact:true}).click();
+  await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready);
+  await page.getByRole('button',{name:'切换到中文',exact:true}).click();
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await page.screenshot({path:'/private/tmp/microduck-zh-mobile.png',fullPage:true});
+  assert.deepEqual(errors,[]);
+  console.log('PASS: course/lab language handoff, Chinese/English labels and lessons, persisted language, unchanged joint/selection/visibility/explosion/camera state, narrow-screen layout.');
+}finally{await browser.close();}

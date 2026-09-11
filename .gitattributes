@@ -1,0 +1,2 @@
+# Generated shader strings preserve upstream whitespace; do not rewrite bundles.
+docs/_next/static/chunks/*.js whitespace=-blank-at-eol
