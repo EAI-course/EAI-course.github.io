@@ -1,0 +1,15 @@
+Microduck robot geometry and body hierarchy
+
+Source: Pollen Robotics, Microduck Simulator
+https://huggingface.co/spaces/pollen-robotics/microduck-simulator
+Pinned revision: 023172c8a7d629b5258d90364c13bafe013abbfa
+Source directory: app/public/robot/mjlab
+The copied geometry and kinematics.json are unmodified.
+
+Related source model and licensing notice:
+https://github.com/pollen-robotics/microduck_rl
+The upstream README states: "3D model files are licensed under Creative Commons BY-SA-NC."
+The README does not specify a Creative Commons license version. This copy does not substitute a different license or claim commercial-use permission.
+The repository's Apache 2.0 source-code license does not replace the separate 3D-model notice.
+
+This teaching viewer depicts the released simulation assembly. It is not a manufacturing specification, complete bill of materials, or safe disassembly procedure.

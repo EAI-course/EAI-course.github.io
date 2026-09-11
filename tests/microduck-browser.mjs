@@ -1,0 +1,66 @@
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});
+const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+await page.addInitScript(()=>{
+  localStorage.setItem('eai-course-language','en');
+  const registry=new Map();
+  Object.defineProperty(document,'modelContext',{value:{registerTool(tool,options){registry.set(tool.name,tool);options?.signal.addEventListener('abort',()=>registry.delete(tool.name));}},configurable:true});
+  window.testTools=registry;
+});
+const read=()=>page.evaluate(()=>window.testTools.get('read_microduck_state').execute({}));
+const configure=(input)=>page.evaluate(input=>window.testTools.get('configure_microduck_view').execute(input),input);
+try {
+  await page.goto((process.env.TEST_BASE_URL || 'http://localhost:3001')+'/microduck/?lang=en');
+  await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready,{},{timeout:60000});
+  const baseline=await read();assert.equal(baseline.parts.length,70);assert.equal(baseline.joints.length,14);
+  await page.screenshot({path:'/private/tmp/microduck-desktop.png',fullPage:true});
+  await page.getByRole('tab',{name:'Joint motion',exact:true}).click();
+  await page.getByRole('slider',{name:/left hip yaw/}).press('End');
+  assert.ok(Math.abs((await read()).angleDegrees-30)<.00001);
+  await configure({action:'joint',jointBody:'yaw2roll',angleDegrees:20});
+  const moved=await read();
+  const left=new Set(['yaw2roll','hip_l','upper_leg_left','leg','ankle_left']);
+  let leftChanged=0;
+  for(let i=0;i<baseline.transforms.length;i++) {
+    const a=baseline.transforms[i],b=moved.transforms[i]; const differs=a.position.some((n,j)=>Math.abs(n-b.position[j])>1e-9)||a.quaternion.some((n,j)=>Math.abs(n-b.quaternion[j])>1e-9);
+    if(left.has(a.id.split(':')[0])) {if(differs)leftChanged++;} else assert.equal(differs,false,`${a.id} moved outside the selected joint subtree`);
+  }
+  assert.ok(leftChanged>10);
+  const beforeInvalid=await read();
+  await assert.rejects(configure({action:'joint',jointBody:'yaw2roll',angleDegrees:900}));
+  assert.deepEqual((await read()).transforms,beforeInvalid.transforms);
+  for(let i=0;i<6;i++){await configure({action:'assembly',explodePercent:100});await configure({action:'assembly',explodePercent:0});}
+  assert.deepEqual((await read()).transforms,baseline.transforms);
+  await configure({action:'select',partId:'trunk_base:1'});
+  await page.getByRole('button',{name:'Hide part',exact:true}).click();
+  assert.equal((await read()).transforms.find(p=>p.id==='trunk_base:1').visible,false);
+  await page.getByRole('button',{name:'Show all',exact:true}).click();
+  await page.getByRole('button',{name:'Isolate part',exact:true}).click();
+  assert.equal((await read()).transforms.filter(p=>p.visible).length,1);
+  await page.getByRole('button',{name:'Reset everything',exact:true}).click();
+  assert.equal((await read()).transforms.filter(p=>p.visible).length,70);
+  assert.equal((await read()).mode,'assembly');
+  await page.getByRole('button',{name:'3. Follow the connected parts',exact:true}).click();
+  assert.equal((await read()).mode,'joints');
+  await page.getByRole('button',{name:'Show explanation',exact:true}).click();
+  await page.getByText('The left foot moves because',{exact:false}).waitFor();
+  await configure({action:'reset'});
+  await page.setViewportSize({width:390,height:844});
+  await page.reload();
+  await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready,{},{timeout:60000});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
+  await page.screenshot({path:'/private/tmp/microduck-mobile.png',fullPage:true});
+  await page.getByRole('tab',{name:'Joint motion',exact:true}).click();
+  await page.getByRole('slider',{name:/left hip yaw/}).press('Home');
+  assert.ok(Math.abs((await read()).angleDegrees+25)<.00001);
+  assert.deepEqual(errors,[]);
+  await page.route('**/microduck/meshes/**',route=>route.abort());
+  await page.reload();
+  await page.getByRole('button',{name:'Retry loading',exact:true}).waitFor({timeout:30000});
+  await page.unroute('**/microduck/meshes/**');
+  await page.getByRole('button',{name:'Retry loading',exact:true}).click();
+  await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready,{},{timeout:60000});
+  console.log('PASS: desktop/mobile, 70 parts, 14 joints, keyboard limits, descendant motion, invalid-input isolation, drift-free reset, hide/isolate, activities, model error and retry. WebMCP tested through a registry harness, not native browser support.');
+} finally {await browser.close();}
