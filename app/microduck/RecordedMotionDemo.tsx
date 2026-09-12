@@ -20,7 +20,7 @@ export default function RecordedMotionDemo() {
     let disposed=false; let cleanup=()=>{};
     (async()=>{
       const [THREE,{OrbitControls},motionResponse]=await Promise.all([
-        import('three'),import('three/addons/controls/OrbitControls.js'),fetch('/microduck/demo-motion.json.gz')
+        import('three'),import('three/addons/controls/OrbitControls.js'),fetch('/microduck/demo-motion.json.gz?v=turn-20260912')
       ]);
       if(!motionResponse.ok) throw new Error('The recorded demonstration could not be loaded.');
       const packed=await motionResponse.arrayBuffer();let text='';
