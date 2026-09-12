@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { languageKey } from './microduck/i18n';
 import {
   ArrowDown, ArrowRight, BookOpen, Bot, BrainCircuit, CalendarDays, Camera,
   CheckCircle2, ChevronRight, Cpu, GitBranch, GraduationCap, Hand, Languages,
@@ -81,11 +80,9 @@ export default function Home() {
   const resourceIcons = [CalendarDays, GraduationCap, GitBranch, BookOpen];
   const resourceLinks = ['#schedule', '#project', 'https://github.com/EAI-course', 'https://memx.life/#/ei'];
 
-  useEffect(() => {try {const requested=new URLSearchParams(location.search).get('lang');const saved=requested || localStorage.getItem(languageKey);if(saved==='en'||saved==='zh')setLocale(saved);}catch{}},[]);
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
     document.title = t.pageTitle;
-    try {localStorage.setItem(languageKey,locale);}catch{}
   }, [locale, t.pageTitle]);
 
   return (
@@ -93,10 +90,10 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label={t.brand}><span className="brand-mark"><Bot size={19} /></span><span>{t.brand}</span></a>
         <nav aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
-          <a href="#learn">{t.nav[0]}</a><a href="#schedule">{t.nav[1]}</a><a href="#project">{t.nav[2]}</a><a href={`/microduck/?lang=${locale}`}>Microduck Lab</a><a href="#resources">{t.nav[3]}</a>
+          <a href="#learn">{t.nav[0]}</a><a href="#schedule">{t.nav[1]}</a><a href="#project">{t.nav[2]}</a><a href="/microduck/">Microduck Lab</a><a href="#resources">{t.nav[3]}</a>
         </nav>
         <a className="github-link" href="https://github.com/EAI-course" target="_blank" rel="noreferrer"><GitBranch size={18} /><span>{t.github}</span></a>
-        <button className="lang-toggle" type="button" onClick={() => {const next=locale === 'zh' ? 'en' : 'zh';setLocale(next);const url=new URL(location.href);url.searchParams.set('lang',next);history.replaceState(history.state,'',url);}} aria-label={t.languageLabel} title={t.languageLabel}>
+        <button className="lang-toggle" type="button" onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')} aria-label={t.languageLabel} title={t.languageLabel}>
           <Languages size={17} /><span>{t.language}</span>
         </button>
       </header>

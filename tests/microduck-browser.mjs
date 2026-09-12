@@ -1,10 +1,9 @@
-const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+import { chromium } from '/Users/lishang/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const page=await browser.newPage({viewport:{width:1440,height:1000}});
 const errors=[]; page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>{
-  localStorage.setItem('eai-course-language','en');
   const registry=new Map();
   Object.defineProperty(document,'modelContext',{value:{registerTool(tool,options){registry.set(tool.name,tool);options?.signal.addEventListener('abort',()=>registry.delete(tool.name));}},configurable:true});
   window.testTools=registry;
@@ -12,7 +11,7 @@ await page.addInitScript(()=>{
 const read=()=>page.evaluate(()=>window.testTools.get('read_microduck_state').execute({}));
 const configure=(input)=>page.evaluate(input=>window.testTools.get('configure_microduck_view').execute(input),input);
 try {
-  await page.goto((process.env.TEST_BASE_URL || 'http://localhost:3001')+'/microduck/?lang=en');
+  await page.goto(process.env.MICRODUCK_URL||'http://localhost:4173/microduck');
   await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready,{},{timeout:60000});
   const baseline=await read();assert.equal(baseline.parts.length,70);assert.equal(baseline.joints.length,14);
   await page.screenshot({path:'/private/tmp/microduck-desktop.png',fullPage:true});
@@ -46,6 +45,14 @@ try {
   assert.equal((await read()).mode,'joints');
   await page.getByRole('button',{name:'Show explanation',exact:true}).click();
   await page.getByText('The left foot moves because',{exact:false}).waitFor();
+  await page.getByRole('status').filter({hasText:'Recorded simulation ready.'}).waitFor({timeout:60000});
+  assert.equal(await page.locator('iframe').count(),0);
+  assert.equal(await page.locator('canvas').count(),2);
+  const playback=page.getByRole('button',{name:'Play recording',exact:true});
+  await playback.click();
+  await page.waitForTimeout(350);
+  assert.notEqual(await page.getByRole('slider',{name:'Recorded motion timeline'}).inputValue(),'0');
+  await page.getByRole('button',{name:'Pause',exact:true}).click();
   await configure({action:'reset'});
   await page.setViewportSize({width:390,height:844});
   await page.reload();
@@ -62,5 +69,5 @@ try {
   await page.unroute('**/microduck/meshes/**');
   await page.getByRole('button',{name:'Retry loading',exact:true}).click();
   await page.waitForFunction(()=>window.testTools?.get('read_microduck_state')?.execute({}).ready,{},{timeout:60000});
-  console.log('PASS: desktop/mobile, 70 parts, 14 joints, keyboard limits, descendant motion, invalid-input isolation, drift-free reset, hide/isolate, activities, model error and retry. WebMCP tested through a registry harness, not native browser support.');
+  console.log('PASS: desktop/mobile, native recorded playback, no iframe, 70 parts, 14 joints, keyboard limits, descendant motion, invalid-input isolation, drift-free reset, hide/isolate, activities, model error and retry. WebMCP tested through a registry harness, not native browser support.');
 } finally {await browser.close();}
