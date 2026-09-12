@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowDown, ArrowRight, BookOpen, Bot, BrainCircuit, CalendarDays, Camera,
-  CheckCircle2, ChevronRight, Cpu, GitBranch, GraduationCap, Hand, Languages,
+  CheckCircle2, ChevronRight, Cpu, Download, GitBranch, GraduationCap, Hand, Languages,
   Map, Route, Sparkles, Target, Users,
 } from 'lucide-react';
 
 const icons = [Camera, BrainCircuit, Route, Bot];
+const lectureFiles: Record<number, string> = { 1: '/lectures/EAI-lecture1.pdf' };
 
 const content = {
   zh: {
@@ -115,7 +116,7 @@ export default function Home() {
       </div></section>
 
       <section className="schedule section-shell" id="schedule"><div className="section-heading split-heading"><div><p className="kicker">{t.scheduleKicker}</p><h2>{t.scheduleTitle}</h2></div><p>{t.scheduleIntro}</p></div>
-        <div className="schedule-grid">{t.schedule.map(([title, tag], index) => <article className="week-row" key={title}><span className="week-number">{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><span className="week-tag">{tag}</span></article>)}</div><p className="schedule-note">{t.scheduleNote}</p>
+        <div className="schedule-grid">{t.schedule.map(([title, tag], index) => <article className="week-row" key={title}><span className="week-number">{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><div className="week-actions"><span className="week-tag">{tag}</span>{lectureFiles[index + 1] ? <a className="lecture-download" href={lectureFiles[index + 1]} download aria-label={locale === 'zh' ? `下载第 ${index + 1} 周课件` : `Download week ${index + 1} slides`}><Download size={13} />{locale === 'zh' ? '下载课件' : 'Slides'}</a> : <button className="lecture-download" type="button" disabled title={locale === 'zh' ? '课件尚未上传' : 'Slides not yet uploaded'}>{locale === 'zh' ? '课件待上传' : 'Coming soon'}</button>}</div></article>)}</div><p className="schedule-note">{t.scheduleNote}</p>
       </section>
 
       <section className="project" id="project"><div className="section-shell project-grid"><div className="project-copy"><p className="kicker light">{t.projectKicker}</p><h2>{t.projectTitle[0]}<br />{t.projectTitle[1]}</h2><p>{t.projectIntro}</p>

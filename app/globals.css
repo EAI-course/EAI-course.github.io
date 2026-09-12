@@ -167,3 +167,11 @@ footer { background: var(--navy); color: white; }
   .site-header nav {left:16px;right:16px;font-size:14px;gap:18px;}
   .hero {padding-top:164px;}
 }
+
+/* Compact weekly slide downloads, with unavailable weeks clearly marked. */
+.week-actions { display: flex; align-items: center; gap: 8px; }
+.lecture-download { display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: inherit; font: inherit; font-size: .72rem; text-decoration: none; }
+a.lecture-download:hover { background: #eef3ed; border-color: currentColor; }
+a.lecture-download:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.lecture-download:disabled { color: var(--muted); opacity: .65; cursor: default; }
+@media (max-width: 640px) { .week-actions { flex-direction: column; align-items: flex-end; gap: 5px; } .week-row { gap: 10px; padding: 10px 0; } }
