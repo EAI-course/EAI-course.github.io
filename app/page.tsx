@@ -28,7 +28,7 @@ const content = {
     questionKicker: '贯穿课程的问题', question: ['一个机器人怎样知道', '自己该做什么，并真正做到？'], loop: ['感知', '理解', '决策', '行动', '反馈'],
     scheduleKicker: '课程安排', scheduleTitle: '16 周，从概念到系统', scheduleIntro: '前半程建立共同基础，后半程进入机器人学习与前沿模型；每个模块都服务于最终项目。',
     schedule: [
-      ['具身智能：从“会回答”到“会行动”', '导论'], ['机器人系统、传感器与执行器', '基础'], ['机器学习基础与表征学习', '基础'], ['视觉感知与三维场景理解', '感知'],
+      ['具身智能：从“会回答”到“会行动”', '导论'], ['Vibe Coding', '基础'], ['舵机与运动控制', '基础'], ['视觉感知与三维场景理解', '感知'],
       ['触觉、本体感觉与多模态融合', '感知'], ['定位、建图与空间智能', '感知'], ['运动学、动力学与机器人控制', '行动'], ['运动规划与操作策略', '行动'],
       ['模仿学习：从示范中学习动作', '学习'], ['强化学习：在交互中优化策略', '学习'], ['世界模型与模型式决策', '推理'], ['视觉—语言—动作模型（VLA）', '前沿'],
       ['具身智能体：记忆、工具与任务规划', '前沿'], ['仿真平台、数据与 Sim-to-Real', '实践'], ['安全、评测与真实部署', '实践'], ['Demo Day：让系统在现场完成任务', '项目'],
@@ -58,7 +58,7 @@ const content = {
     questionKicker: 'THE QUESTION THROUGHOUT THE COURSE', question: ['How does a robot know', 'what to do—and actually do it?'], loop: ['Perceive', 'Understand', 'Decide', 'Act', 'Learn'],
     scheduleKicker: 'COURSE SCHEDULE', scheduleTitle: '16 weeks, from ideas to systems', scheduleIntro: 'The first half builds shared foundations. The second moves into robot learning and frontier models. Every module supports the final project.',
     schedule: [
-      ['Embodied intelligence: from answering to acting', 'Overview'], ['Robot systems, sensors, and actuators', 'Foundations'], ['Machine learning and representation learning', 'Foundations'], ['Visual perception and 3D scene understanding', 'Perception'],
+      ['Embodied intelligence: from answering to acting', 'Overview'], ['Vibe Coding', 'Foundations'], ['Servos and Motion Control', 'Foundations'], ['Visual perception and 3D scene understanding', 'Perception'],
       ['Touch, proprioception, and multimodal fusion', 'Perception'], ['Localization, mapping, and spatial intelligence', 'Perception'], ['Kinematics, dynamics, and robot control', 'Action'], ['Motion planning and manipulation policies', 'Action'],
       ['Imitation learning: learning from demonstrations', 'Learning'], ['Reinforcement learning: improving through interaction', 'Learning'], ['World models and model-based decision-making', 'Reasoning'], ['Vision–language–action models (VLA)', 'Frontier'],
       ['Embodied agents: memory, tools, and task planning', 'Frontier'], ['Simulation, data, and Sim-to-Real', 'Practice'], ['Safety, evaluation, and real-world deployment', 'Practice'], ['Demo Day: completing a task live', 'Project'],
