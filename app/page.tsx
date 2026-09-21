@@ -8,7 +8,10 @@ import {
 } from 'lucide-react';
 
 const icons = [Camera, BrainCircuit, Route, Bot];
-const lectureLinks: Record<number, string> = { 2: 'https://sa87gcdhzg.feishu.cn/wiki/R3i5wIZq4iWKXlkU7xdcTsMRnfb' };
+const lectureLinks: Record<number, string> = {
+  2: 'https://sa87gcdhzg.feishu.cn/wiki/R3i5wIZq4iWKXlkU7xdcTsMRnfb',
+  3: 'https://sa87gcdhzg.feishu.cn/wiki/Er3nwu6JNiZ5fqklfzzcKkhGn2g',
+};
 const lectureFiles: Record<number, string> = { 1: '/lectures/EAI-lecture1.pdf' };
 
 const content = {
