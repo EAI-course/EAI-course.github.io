@@ -11,8 +11,11 @@ const icons = [Camera, BrainCircuit, Route, Bot];
 const lectureLinks: Record<number, string> = {
   2: 'https://sa87gcdhzg.feishu.cn/wiki/R3i5wIZq4iWKXlkU7xdcTsMRnfb',
   3: 'https://sa87gcdhzg.feishu.cn/wiki/Er3nwu6JNiZ5fqklfzzcKkhGn2g',
+  4: 'https://sa87gcdhzg.feishu.cn/wiki/BJN3w4Hc2iqSRVkS6x8cSNjonSe',
+  6: 'https://sa87gcdhzg.feishu.cn/wiki/D1jWwPc3PikTAFkHkTkcfgJknEf',
 };
 const lectureFiles: Record<number, string> = { 1: '/lectures/EAI-lecture1.pdf' };
+const noClassWeeks = new Set([5]);
 
 const content = {
   zh: {
@@ -31,8 +34,8 @@ const content = {
     questionKicker: '贯穿课程的问题', question: ['一个机器人怎样知道', '自己该做什么，并真正做到？'], loop: ['感知', '理解', '决策', '行动', '反馈'],
     scheduleKicker: '课程安排', scheduleTitle: '16 周，从概念到系统', scheduleIntro: '前半程建立共同基础，后半程进入机器人学习与前沿模型；每个模块都服务于最终项目。',
     schedule: [
-      ['具身智能：从“会回答”到“会行动”', '导论'], ['Vibe Coding', '基础'], ['舵机与运动控制', '基础'], ['视觉感知与三维场景理解', '感知'],
-      ['触觉、本体感觉与多模态融合', '感知'], ['定位、建图与空间智能', '感知'], ['运动学、动力学与机器人控制', '行动'], ['运动规划与操作策略', '行动'],
+      ['具身智能：从“会回答”到“会行动”', '导论'], ['Vibe Coding', '基础'], ['舵机与运动控制', '基础'], ['多关节控制与正逆运动学', '控制'],
+      ['国庆放假（不上课）', '放假'], ['视觉伺服', '控制'], ['运动学、动力学与机器人控制', '行动'], ['运动规划与操作策略', '行动'],
       ['模仿学习：从示范中学习动作', '学习'], ['强化学习：在交互中优化策略', '学习'], ['世界模型与模型式决策', '推理'], ['视觉—语言—动作模型（VLA）', '前沿'],
       ['具身智能体：记忆、工具与任务规划', '前沿'], ['仿真平台、数据与 Sim-to-Real', '实践'], ['安全、评测与真实部署', '实践'], ['Demo Day：让系统在现场完成任务', '项目'],
     ],
@@ -61,8 +64,8 @@ const content = {
     questionKicker: 'THE QUESTION THROUGHOUT THE COURSE', question: ['How does a robot know', 'what to do—and actually do it?'], loop: ['Perceive', 'Understand', 'Decide', 'Act', 'Learn'],
     scheduleKicker: 'COURSE SCHEDULE', scheduleTitle: '16 weeks, from ideas to systems', scheduleIntro: 'The first half builds shared foundations. The second moves into robot learning and frontier models. Every module supports the final project.',
     schedule: [
-      ['Embodied intelligence: from answering to acting', 'Overview'], ['Vibe Coding', 'Foundations'], ['Servos and Motion Control', 'Foundations'], ['Visual perception and 3D scene understanding', 'Perception'],
-      ['Touch, proprioception, and multimodal fusion', 'Perception'], ['Localization, mapping, and spatial intelligence', 'Perception'], ['Kinematics, dynamics, and robot control', 'Action'], ['Motion planning and manipulation policies', 'Action'],
+      ['Embodied intelligence: from answering to acting', 'Overview'], ['Vibe Coding', 'Foundations'], ['Servos and Motion Control', 'Foundations'], ['Multi-joint control and forward/inverse kinematics', 'Control'],
+      ['National Day holiday (no class)', 'Holiday'], ['Visual servoing', 'Control'], ['Kinematics, dynamics, and robot control', 'Action'], ['Motion planning and manipulation policies', 'Action'],
       ['Imitation learning: learning from demonstrations', 'Learning'], ['Reinforcement learning: improving through interaction', 'Learning'], ['World models and model-based decision-making', 'Reasoning'], ['Vision–language–action models (VLA)', 'Frontier'],
       ['Embodied agents: memory, tools, and task planning', 'Frontier'], ['Simulation, data, and Sim-to-Real', 'Practice'], ['Safety, evaluation, and real-world deployment', 'Practice'], ['Demo Day: completing a task live', 'Project'],
     ],
@@ -120,7 +123,7 @@ export default function Home() {
       </div></section>
 
       <section className="schedule section-shell" id="schedule"><div className="section-heading split-heading"><div><p className="kicker">{t.scheduleKicker}</p><h2>{t.scheduleTitle}</h2></div><p>{t.scheduleIntro}</p></div>
-        <div className="schedule-grid">{t.schedule.map(([title, tag], index) => <article className="week-row" key={title}><span className="week-number">{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><div className="week-actions"><span className="week-tag">{tag}</span>{lectureLinks[index + 1] ? <a className="lecture-download" href={lectureLinks[index + 1]} target="_blank" rel="noopener noreferrer" aria-label={locale === 'zh' ? `查看第 ${index + 1} 周课件（新标签页）` : `View week ${index + 1} slides (new tab)`}><ArrowRight size={13} />{locale === 'zh' ? '查看课件' : 'View slides'}</a> : lectureFiles[index + 1] ? <a className="lecture-download" href={lectureFiles[index + 1]} download aria-label={locale === 'zh' ? `下载第 ${index + 1} 周课件` : `Download week ${index + 1} slides`}><Download size={13} />{locale === 'zh' ? '下载课件' : 'Slides'}</a> : <button className="lecture-download" type="button" disabled title={locale === 'zh' ? '课件尚未上传' : 'Slides not yet uploaded'}>{locale === 'zh' ? '课件待上传' : 'Coming soon'}</button>}</div></article>)}</div><p className="schedule-note">{t.scheduleNote}</p>
+        <div className="schedule-grid">{t.schedule.map(([title, tag], index) => <article className="week-row" key={title}><span className="week-number">{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><div className="week-actions"><span className="week-tag">{tag}</span>{noClassWeeks.has(index + 1) ? <button className="lecture-download" type="button" disabled>{locale === 'zh' ? '不上课' : 'No class'}</button> : lectureLinks[index + 1] ? <a className="lecture-download" href={lectureLinks[index + 1]} target="_blank" rel="noopener noreferrer" aria-label={locale === 'zh' ? `查看第 ${index + 1} 周课件（新标签页）` : `View week ${index + 1} slides (new tab)`}><ArrowRight size={13} />{locale === 'zh' ? '查看课件' : 'View slides'}</a> : lectureFiles[index + 1] ? <a className="lecture-download" href={lectureFiles[index + 1]} download aria-label={locale === 'zh' ? `下载第 ${index + 1} 周课件` : `Download week ${index + 1} slides`}><Download size={13} />{locale === 'zh' ? '下载课件' : 'Slides'}</a> : <button className="lecture-download" type="button" disabled title={locale === 'zh' ? '课件尚未上传' : 'Slides not yet uploaded'}>{locale === 'zh' ? '课件待上传' : 'Coming soon'}</button>}</div></article>)}</div><p className="schedule-note">{t.scheduleNote}</p>
       </section>
 
       <section className="project" id="project"><div className="section-shell project-grid"><div className="project-copy"><p className="kicker light">{t.projectKicker}</p><h2>{t.projectTitle[0]}<br />{t.projectTitle[1]}</h2><p>{t.projectIntro}</p>
