@@ -197,7 +197,6 @@ export default function JarvisProjectPage() {
             </div>
             <div className="workflow-copy">
               <p className="jarvis-kicker blue">SYSTEM WORKFLOW</p>
-              <h3>这是一种参考实现，<br />不是唯一答案。</h3>
               <ul>
                 <li><span>01</span><p>用户通过语音与语音交互 Agent 沟通。</p></li>
                 <li><span>02</span><p>视觉 Agent 提供环境上下文，例如当前看到了什么、人或目标物体在哪里。</p></li>
