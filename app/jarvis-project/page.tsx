@@ -154,7 +154,7 @@ export default function JarvisProjectPage() {
         <div className="jarvis-shell split-intro">
           <div>
             <p className="jarvis-kicker blue">PROJECT VISION</p>
-            <h2>从一个有趣的想法，<br />到一个真实可演示的系统。</h2>
+            <h2>将有趣的想法，<br />变成真实的系统。</h2>
           </div>
           <div className="intro-copy">
             <p>想象这样一个机器人：听到你的声音时会主动看向你、和你打招呼；它能观察周围环境，理解你的行为与表情，并与你聊天。</p>
