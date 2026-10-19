@@ -1,4 +1,5 @@
 import {
+  Archive,
   ArrowDown,
   ArrowRight,
   Bot,
@@ -7,6 +8,7 @@ import {
   Camera,
   CheckCircle2,
   FileText,
+  ExternalLink,
   Lightbulb,
   MessageCircle,
   Mic2,
@@ -118,6 +120,7 @@ export default function JarvisProjectPage() {
           <a href="#framework">参考框架</a>
           <a href="#capabilities">能力参考</a>
           <a href="#timeline">三阶段安排</a>
+          <a href="#submission">提交方式</a>
           <a href="#grading">评估方式</a>
         </nav>
         <p>具身智能引论 · 2026 秋季</p>
@@ -278,6 +281,69 @@ export default function JarvisProjectPage() {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="jarvis-section submission-section" id="submission">
+        <div className="jarvis-shell">
+          <div className="submission-heading">
+            <div>
+              <p className="jarvis-kicker blue">SUBMISSION</p>
+              <h2>提交方式与材料</h2>
+            </div>
+            <p>第一、二阶段均以小组为单位提交。请在截止时间前确认压缩包内容完整，并通过对应的微云链接上传。</p>
+          </div>
+
+          <aside className="package-rule">
+            <div><Archive size={25} /></div>
+            <div>
+              <p>两个阶段通用的打包与命名要求</p>
+              <h3>将所有提交内容放在同一个文件夹中，打包成一个压缩包。</h3>
+              <p>压缩包统一以 <strong>“组号-组员姓名”</strong> 命名。例如：<code>03-张三-李四-王五.zip</code></p>
+            </div>
+          </aside>
+
+          <div className="submission-cards">
+            <article className="submission-card">
+              <div className="submission-card-top">
+                <span>STAGE 01</span>
+                <p><CalendarClock size={16} /> 2026.11.02 · 24:00</p>
+              </div>
+              <div className="submission-card-body">
+                <h3>第一阶段 · Proposal</h3>
+                <p>提交一份实现计划的 <strong>Markdown 或 PDF 文档</strong>，内容包括：</p>
+                <ol>
+                  <li><span>01</span><p>想在 Agent 上完成什么功能。</p></li>
+                  <li><span>02</span><p>为什么这些功能有趣或有用。</p></li>
+                  <li><span>03</span><p>大致计划如何实现；提供总体思路即可，暂不要求具体方案。</p></li>
+                  <li><span>04</span><p>如果一切顺利，最后一周 Demo Day 计划展示什么。</p></li>
+                </ol>
+                <p className="submission-note">Proposal 后续可以继续调整，不需要从一开始就固定不变。</p>
+                <a href="http://inbox.weiyun.com/IXJb4NVH" target="_blank" rel="noopener noreferrer">
+                  提交第一阶段材料 <ExternalLink size={17} />
+                </a>
+              </div>
+            </article>
+
+            <article className="submission-card">
+              <div className="submission-card-top">
+                <span>STAGE 02</span>
+                <p><CalendarClock size={16} /> 2026.11.23 · 24:00</p>
+              </div>
+              <div className="submission-card-body">
+                <h3>第二阶段 · Checkpoint</h3>
+                <p>提交当前阶段的文档与演示材料：</p>
+                <ol>
+                  <li><span>01</span><p>一份 <strong>Markdown 或 PDF 文档</strong>，介绍当前进展、实现思路、对 Proposal 的调整，以及调整的原因。</p></li>
+                  <li><span>02</span><p>一个当前功能的<strong>演示视频</strong>。成功结果或失败尝试都可以演示，我们的目的是看到每组真实的项目进展。</p></li>
+                </ol>
+                <p className="submission-note">请如实区分已经完成、正在尝试和仍未解决的部分。</p>
+                <a href="http://inbox.weiyun.com/EhyfNLPZ" target="_blank" rel="noopener noreferrer">
+                  提交第二阶段材料 <ExternalLink size={17} />
+                </a>
+              </div>
+            </article>
           </div>
         </div>
       </section>
