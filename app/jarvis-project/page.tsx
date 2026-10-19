@@ -238,7 +238,7 @@ export default function JarvisProjectPage() {
         <div className="jarvis-shell capability-layout">
           <div className="capability-heading">
             <p className="jarvis-kicker blue">CAPABILITY REFERENCES</p>
-            <h2>从这些能力出发，<br />但不要被它们限制。</h2>
+            <h2>我们可以从这些能力出发</h2>
             <p>以下是可复用的能力模块，不是所有小组都必须完成的固定清单。请根据你们的 Proposal 选择、组合或替换。</p>
           </div>
           <div className="capability-list">
