@@ -13,6 +13,7 @@ const lectureLinks: Record<number, string> = {
   3: 'https://sa87gcdhzg.feishu.cn/wiki/Er3nwu6JNiZ5fqklfzzcKkhGn2g',
   4: 'https://sa87gcdhzg.feishu.cn/wiki/BJN3w4Hc2iqSRVkS6x8cSNjonSe',
   6: 'https://sa87gcdhzg.feishu.cn/wiki/D1jWwPc3PikTAFkHkTkcfgJknEf',
+  7: 'https://sa87gcdhzg.feishu.cn/wiki/LVVow0AxIiPbGDk5zedcuGaLnqc',
 };
 const lectureFiles: Record<number, string> = { 1: '/lectures/EAI-lecture1.pdf' };
 const noClassWeeks = new Set([5]);
@@ -35,9 +36,9 @@ const content = {
     scheduleKicker: '课程安排', scheduleTitle: '16 周，从概念到系统', scheduleIntro: '前半程建立共同基础，后半程进入机器人学习与前沿模型；每个模块都服务于最终项目。',
     schedule: [
       ['具身智能：从“会回答”到“会行动”', '导论'], ['Vibe Coding', '基础'], ['舵机与运动控制', '基础'], ['多关节控制与正逆运动学', '控制'],
-      ['国庆放假（不上课）', '放假'], ['视觉伺服', '控制'], ['运动学、动力学与机器人控制', '行动'], ['运动规划与操作策略', '行动'],
-      ['模仿学习：从示范中学习动作', '学习'], ['强化学习：在交互中优化策略', '学习'], ['世界模型与模型式决策', '推理'], ['视觉—语言—动作模型（VLA）', '前沿'],
-      ['具身智能体：记忆、工具与任务规划', '前沿'], ['仿真平台、数据与 Sim-to-Real', '实践'], ['安全、评测与真实部署', '实践'], ['Demo Day：让系统在现场完成任务', '项目'],
+      ['国庆放假（不上课）', '放假'], ['视觉伺服', '控制'], ['LLM Agent', '智能体'], ['强化学习', '学习'],
+      ['感觉运动系统（一）', '感知'], ['感觉运动系统（二）', '感知'], ['认知架构（一）', '认知'], ['认知架构（二）', '认知'],
+      ['导航与制图（一）', '导航'], ['导航与制图（二）', '导航'], ['群体智能', '协作'], ['Demo Day：让系统在现场完成任务', '项目'],
     ],
     scheduleNote: '课程主题会根据领域进展与项目节奏微调；具体上课时间、地点和材料以教学平台通知为准。',
     projectKicker: '课程项目', projectTitle: ['做出一个能在现场', '完成任务的智能体'],
@@ -65,9 +66,9 @@ const content = {
     scheduleKicker: 'COURSE SCHEDULE', scheduleTitle: '16 weeks, from ideas to systems', scheduleIntro: 'The first half builds shared foundations. The second moves into robot learning and frontier models. Every module supports the final project.',
     schedule: [
       ['Embodied intelligence: from answering to acting', 'Overview'], ['Vibe Coding', 'Foundations'], ['Servos and Motion Control', 'Foundations'], ['Multi-joint control and forward/inverse kinematics', 'Control'],
-      ['National Day holiday (no class)', 'Holiday'], ['Visual servoing', 'Control'], ['Kinematics, dynamics, and robot control', 'Action'], ['Motion planning and manipulation policies', 'Action'],
-      ['Imitation learning: learning from demonstrations', 'Learning'], ['Reinforcement learning: improving through interaction', 'Learning'], ['World models and model-based decision-making', 'Reasoning'], ['Vision–language–action models (VLA)', 'Frontier'],
-      ['Embodied agents: memory, tools, and task planning', 'Frontier'], ['Simulation, data, and Sim-to-Real', 'Practice'], ['Safety, evaluation, and real-world deployment', 'Practice'], ['Demo Day: completing a task live', 'Project'],
+      ['National Day holiday (no class)', 'Holiday'], ['Visual servoing', 'Control'], ['LLM Agent', 'Agents'], ['Reinforcement Learning', 'Learning'],
+      ['Sensorimotor Systems (I)', 'Perception'], ['Sensorimotor Systems (II)', 'Perception'], ['Cognitive Architecture (I)', 'Cognition'], ['Cognitive Architecture (II)', 'Cognition'],
+      ['Navigation and Mapping (I)', 'Navigation'], ['Navigation and Mapping (II)', 'Navigation'], ['Swarm Intelligence', 'Collaboration'], ['Demo Day: completing a task live', 'Project'],
     ],
     scheduleNote: 'Topics may be adjusted to reflect progress in the field and the project timeline. Consult the teaching platform for confirmed times, locations, and materials.',
     projectKicker: 'COURSE PROJECT', projectTitle: ['Build an agent that can', 'complete a task live'],
