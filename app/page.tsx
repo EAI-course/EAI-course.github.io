@@ -43,6 +43,7 @@ const content = {
     scheduleNote: '课程主题会根据领域进展与项目节奏微调；具体上课时间、地点和材料以教学平台通知为准。',
     projectKicker: '课程项目', projectTitle: ['做出一个能在现场', '完成任务的智能体'],
     projectIntro: '团队选择一个边界清楚的真实任务，完成问题定义、数据与仿真、模型训练、系统集成和现场评测。最终成绩看的是系统能否稳定工作，以及你能否解释它为什么成功或失败。',
+    projectCta: '查看课程项目说明', projectCtaNote: '了解项目愿景、阶段安排、提交方式与评估标准',
     milestones: [['问题定义', '明确任务、环境与成功标准'], ['原型验证', '用最小系统验证关键假设'], ['闭环集成', '让感知、决策与行动真正连通'], ['现场评测', '用可复现的指标展示系统能力']],
     deliverablesTitle: '项目交付物', deliverables: [['系统演示', '现场完成约定任务'], ['技术报告', '说明设计、实验与限制'], ['开源仓库', '保存代码、配置与复现说明']], demo: 'DEMO DAY · 第 16 周',
     outcomeKicker: '完成课程后', outcomeTitle: '你应该能够独立回答四个问题', outcomes: ['解释具身智能系统的感知—推理—行动闭环', '为具体任务选择合适的学习与控制方法', '读懂并复现具身智能领域的代表性工作', '完成一个可演示、可评测的机器人项目'],
@@ -73,6 +74,7 @@ const content = {
     scheduleNote: 'Topics may be adjusted to reflect progress in the field and the project timeline. Consult the teaching platform for confirmed times, locations, and materials.',
     projectKicker: 'COURSE PROJECT', projectTitle: ['Build an agent that can', 'complete a task live'],
     projectIntro: 'Teams choose a well-scoped real task and work through problem definition, data and simulation, model training, system integration, and live evaluation. Success means a system that works reliably—and an explanation of why it succeeds or fails.',
+    projectCta: 'View the course project brief', projectCtaNote: 'Review the vision, milestones, submission instructions, and evaluation criteria',
     milestones: [['Define', 'Specify the task, environment, and success criteria'], ['Prototype', 'Test the key assumption with a minimal system'], ['Integrate', 'Connect perception, decision-making, and action'], ['Evaluate', 'Demonstrate capability with reproducible metrics']],
     deliverablesTitle: 'PROJECT DELIVERABLES', deliverables: [['System demo', 'Complete the agreed task live'], ['Technical report', 'Explain the design, experiments, and limits'], ['Open repository', 'Preserve code, configuration, and reproduction steps']], demo: 'DEMO DAY · WEEK 16',
     outcomeKicker: 'BY THE END', outcomeTitle: 'You should be able to do four things independently', outcomes: ['Explain the perception–reasoning–action loop of an embodied system', 'Choose suitable learning and control methods for a concrete task', 'Read and reproduce representative work in embodied intelligence', 'Build a robot project that can be demonstrated and evaluated'],
@@ -87,7 +89,7 @@ export default function Home() {
   const factIcons = [CalendarDays, Users, Target];
   const loopIcons = [Camera, BrainCircuit, Map, Hand, Sparkles];
   const resourceIcons = [CalendarDays, GraduationCap, GitBranch, BookOpen];
-  const resourceLinks = ['#schedule', '#project', 'https://github.com/EAI-course', 'https://memx.life/#/ei'];
+  const resourceLinks = ['#schedule', '/jarvis-project/', 'https://github.com/EAI-course', 'https://memx.life/#/ei'];
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
@@ -128,6 +130,7 @@ export default function Home() {
       </section>
 
       <section className="project" id="project"><div className="section-shell project-grid"><div className="project-copy"><p className="kicker light">{t.projectKicker}</p><h2>{t.projectTitle[0]}<br />{t.projectTitle[1]}</h2><p>{t.projectIntro}</p>
+        <a className="project-brief-link" href="/jarvis-project/"><span><b>{t.projectCta}</b><small>{t.projectCtaNote}</small></span><ArrowRight size={20} /></a>
         <div className="milestones">{t.milestones.map(([title, description], index) => <div key={title}><span>{String(index + 1).padStart(2, '0')}</span><p><b>{title}</b>{description}</p></div>)}</div></div>
         <div className="project-panel"><div className="panel-label"><Cpu size={18} /> {t.deliverablesTitle}</div>{t.deliverables.map(([title, description], index) => <div className="deliverable" key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><b>{title}</b><p>{description}</p></div></div>)}<div className="demo-badge"><Sparkles size={18} /> {t.demo}</div></div>
       </div></section>

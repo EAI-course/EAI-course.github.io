@@ -276,6 +276,7 @@ export default function JarvisProjectPage() {
                   <div className="phase-icon"><Icon size={23} /></div>
                   <h3>{title}</h3>
                   <p>{description}</p>
+                  <p className="phase-deadline">截止时间：{deadline}</p>
                   <ul>{deliverables.map((item) => <li key={item}><CheckCircle2 size={16} />{item}</li>)}</ul>
                   <aside>{note}</aside>
                 </div>
@@ -300,7 +301,7 @@ export default function JarvisProjectPage() {
             <div>
               <p>两个阶段通用的打包与命名要求</p>
               <h3>将所有提交内容放在同一个文件夹中，打包成一个压缩包。</h3>
-              <p>压缩包统一以 <strong>“组号-组员姓名”</strong> 命名。例如：<code>03-张三-李四-王五.zip</code></p>
+              <p>压缩包统一以 <strong className="package-name">“组号-组员姓名”</strong> 命名。例如：<code>03-张三-李四-王五.zip</code></p>
             </div>
           </aside>
 
