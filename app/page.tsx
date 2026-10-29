@@ -84,7 +84,7 @@ const content = {
 } as const;
 
 export default function Home() {
-  const [locale, setLocale] = useState<'zh' | 'en'>('zh');
+  const [locale, setLocale] = useState<'zh' | 'en'>('en');
   const t = content[locale];
   const factIcons = [CalendarDays, Users, Target];
   const loopIcons = [Camera, BrainCircuit, Map, Hand, Sparkles];
